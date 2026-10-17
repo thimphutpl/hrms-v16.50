@@ -13,7 +13,7 @@ frappe.ui.form.on("Salary Structure Assignment", {
 			return {
 				filters: {
 					company: frm.doc.company,
-					docstatus: 1,
+					// docstatus: 1,
 					is_active: "Yes",
 				},
 			};
@@ -70,23 +70,6 @@ frappe.ui.form.on("Salary Structure Assignment", {
 		frm.page.set_inner_btn_group_as_primary(__("Create"));
 
 		frm.add_custom_button(
-			__("See CTC Break-up"),
-			function () {
-				if (!frm.doc.ctc) {
-					frm.scroll_to_field("ctc");
-					frappe.throw(
-						__("Please set employee's total cost to company to see CTC breakup."),
-					);
-				}
-				frappe.set_route("query-report", "Employee CTC Break-up", {
-					company: frm.doc.company,
-					employee: frm.doc.employee,
-					salary_structure_assignment: frm.doc.name,
-				});
-			},
-			__("Actions"),
-		);
-		frm.add_custom_button(
 			__("Preview Salary Slip"),
 			function () {
 				frm.trigger("preview_salary_slip");
@@ -117,37 +100,32 @@ frappe.ui.form.on("Salary Structure Assignment", {
 		}
 	},
 
-	salary_structure: (frm) => {
-		if (frm.doc.salary_structure) {
-			frappe.db.get_doc("Salary Structure", frm.doc.salary_structure).then((doc) => {
-				frm.clear_table("employee_benefits");
-				doc.employee_benefits.forEach((benefit) => {
-					const row = frm.add_child("employee_benefits");
-					row.salary_component = benefit.salary_component;
-					row.amount = benefit.amount;
-				});
-				refresh_field("employee_benefits");
-				calculate_max_benefit_amount(frm.doc);
-			});
-		}
-	},
-
 	preview_salary_slip: function (frm) {
-		frappe.call({
-			method: "hrms.payroll.doctype.salary_structure.salary_structure.make_salary_slip",
-			args: {
-				source_name: frm.doc.salary_structure,
-				employee: frm.doc.employee,
-				posting_date: frm.doc.from_date,
-				as_print: 1,
-				print_format: "Salary Slip Classic",
-				for_preview: 1,
+		frappe.db.get_value(
+			"Salary Structure",
+			frm.doc.salary_structure,
+			"salary_slip_based_on_timesheet",
+			(r) => {
+				const print_format = r.salary_slip_based_on_timesheet
+					? "Salary Slip based on Timesheet"
+					: "Salary Slip Standard";
+				frappe.call({
+					method: "hrms.payroll.doctype.salary_structure.salary_structure.make_salary_slip",
+					args: {
+						source_name: frm.doc.salary_structure,
+						employee: frm.doc.employee,
+						posting_date: frm.doc.from_date,
+						as_print: 1,
+						print_format: print_format,
+						for_preview: 1,
+					},
+					callback: function (r) {
+						const new_window = window.open();
+						new_window.document.write(r.message);
+					},
+				});
 			},
-			callback: function (r) {
-				const new_window = window.open();
-				new_window.document.write(r.message);
-			},
-		});
+		);
 	},
 
 	set_payroll_cost_centers: function (frm) {
@@ -163,7 +141,7 @@ frappe.ui.form.on("Salary Structure Assignment", {
 	},
 
 	toggle_opening_balances_section: function (frm) {
-		if (!frm.doc.from_date || !frm.doc.employee || !frm.doc.salary_structure) return;
+		if (!frm.doc.from_date || !frm.doc.employee) return;
 
 		frm.call("are_opening_entries_required").then((data) => {
 			if (data.message) {
@@ -180,19 +158,3 @@ frappe.ui.form.on("Salary Structure Assignment", {
 		}
 	},
 });
-
-frappe.ui.form.on("Employee Benefit Detail", {
-	amount: (frm) => calculate_max_benefit_amount(frm.doc),
-});
-
-let calculate_max_benefit_amount = (doc) => {
-	let employee_benefits = doc.employee_benefits || [];
-	let max_benefits = 0;
-	if (employee_benefits.length > 0) {
-		for (let i = 0; i < employee_benefits.length; i++) {
-			max_benefits += flt(employee_benefits[i].amount) || 0;
-		}
-	}
-	doc.max_benefits = max_benefits;
-	refresh_field("max_benefits");
-};

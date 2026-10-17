@@ -5,7 +5,6 @@
  "autoname": "HR-TAX-PRF-.YYYY.-.#####",
  "creation": "2018-04-13 17:24:11.456132",
  "doctype": "DocType",
- "documentation": "https://docs.frappe.io/hr/employee-tax-exemption-proof-submission",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
@@ -148,10 +147,9 @@
    "label": "Exemption Proofs"
   }
  ],
- "icon": "file-check",
  "is_submittable": 1,
  "links": [],
- "modified": "2026-10-05 15:00:00.000000",
+ "modified": "2022-11-01 13:13:06.714501",
  "modified_by": "Administrator",
  "module": "Payroll",
  "name": "Employee Tax Exemption Proof Submission",
@@ -220,7 +218,7 @@
   }
  ],
  "search_fields": "employee_name",
- "sort_field": "creation",
+ "sort_field": "modified",
  "sort_order": "DESC",
  "states": [],
  "title_field": "employee_name",

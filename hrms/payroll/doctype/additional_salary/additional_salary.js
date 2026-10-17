@@ -20,7 +20,9 @@ frappe.ui.form.on("Additional Salary", {
 	},
 
 	onload: function (frm) {
-		frm.trigger("set_component_query");
+		if (frm.doc.type) {
+			frm.trigger("set_component_query");
+		}
 	},
 
 	employee: function (frm) {
@@ -53,17 +55,19 @@ frappe.ui.form.on("Additional Salary", {
 	},
 
 	company: function (frm) {
+		frm.set_value("type", "");
 		frm.trigger("set_component_query");
 	},
 
 	set_component_query: function (frm) {
 		if (!frm.doc.company) return;
-
+		let filters = { company: frm.doc.company };
+		if (frm.doc.type) {
+			filters.type = frm.doc.type;
+		}
 		frm.set_query("salary_component", function () {
 			return {
-				filters: {
-					disabled: 0,
-				},
+				filters: filters,
 			};
 		});
 	},
@@ -81,15 +85,6 @@ frappe.ui.form.on("Additional Salary", {
 				}
 			},
 		});
-	},
-
-	is_recurring: function (frm) {
-		if (frm.doc.is_recurring) {
-			frm.set_value("payroll_date", null);
-		} else {
-			frm.set_value("from_date", null);
-			frm.set_value("to_date", null);
-		}
 	},
 
 	salary_component: function (frm) {

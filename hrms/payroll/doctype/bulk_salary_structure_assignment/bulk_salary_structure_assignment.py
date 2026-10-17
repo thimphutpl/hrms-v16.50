@@ -10,9 +10,9 @@ from frappe.query_builder.terms import SubQuery
 from frappe.utils import get_link_to_form
 
 from hrms.hr.utils import validate_bulk_tool_fields
-from hrms.payroll.doctype.salary_structure.salary_structure import (
-	create_salary_structure_assignment,
-)
+# from hrms.payroll.doctype.salary_structure.salary_structure import (
+# 	create_salary_structure_assignment,
+# )
 
 
 class BulkSalaryStructureAssignment(Document):
@@ -60,7 +60,7 @@ class BulkSalaryStructureAssignment(Document):
 		)
 		return query.run(as_dict=True)
 
-	@frappe.whitelist(methods=["POST"])
+	@frappe.whitelist()
 	def bulk_assign_structure(self, employees: list) -> None:
 		mandatory_fields = ["salary_structure", "from_date", "company"]
 		validate_bulk_tool_fields(self, mandatory_fields, employees)
