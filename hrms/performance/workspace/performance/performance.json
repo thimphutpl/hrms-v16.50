@@ -1,12 +1,11 @@
 {
- "app": "hrms",
  "charts": [
   {
    "chart_name": "Appraisal Overview",
    "label": "Appraisal Overview"
   }
  ],
- "content": "[{\"id\":\"5d8cd2c4a8\",\"type\":\"onboarding\",\"data\":{\"onboarding_name\":\"Performance Onboarding\",\"col\":12}},{\"id\":\"06c858b172\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Appraisal Overview\",\"col\":12}},{\"id\":\"6f97170772\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Ongoing Appraisal Cycles\",\"col\":4}},{\"id\":\"34c472e1e7\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Appraisals (This Year)\",\"col\":4}},{\"id\":\"11a238b76b\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Goals In Progress\",\"col\":4}}]",
+ "content": "[{\"id\": \"5d8cd2c4a8\", \"type\": \"onboarding\", \"data\": {\"onboarding_name\": \"Performance Onboarding\", \"col\": 12}}, {\"id\": \"06c858b172\", \"type\": \"chart\", \"data\": {\"chart_name\": \"Appraisal Overview\", \"col\": 12}}, {\"id\": \"6f97170772\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Ongoing Appraisal Cycles\", \"col\": 4}}, {\"id\": \"34c472e1e7\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Appraisals (This Year)\", \"col\": 4}}, {\"id\": \"11a238b76b\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Goals In Progress\", \"col\": 4}}, {\"id\": \"g3nix2je5r\", \"type\": \"paragraph\", \"data\": {\"text\": \"\\u003cspan class=\\\"h4\\\"\\u003ePerformance Management System\\u003c/span\\u003e\", \"col\": 12}}, {\"id\": \"fhhWEgJFLY\", \"type\": \"card\", \"data\": {\"card_name\": \"Master\", \"col\": 4}}, {\"id\": \"q34VGBkTlc\", \"type\": \"card\", \"data\": {\"card_name\": \"PMS\", \"col\": 4}}, {\"id\": \"pgl-ru0tLZ\", \"type\": \"card\", \"data\": {\"card_name\": \"Reports\", \"col\": 4}}]",
  "creation": "2022-08-20 16:17:20.159886",
  "custom_blocks": [],
  "docstatus": 0,
@@ -17,8 +16,146 @@
  "idx": 0,
  "is_hidden": 0,
  "label": "Performance",
- "links": [],
- "modified": "2026-10-05 12:00:00.000000",
+ "links": [
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Master",
+   "link_count": 5,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "PMS Group",
+   "link_count": 0,
+   "link_to": "PMS Group",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Employee Category",
+   "link_count": 0,
+   "link_to": "Employee Category",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Overall Rating",
+   "link_count": 0,
+   "link_to": "Overall Rating",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "PMS Calendar",
+   "link_count": 0,
+   "link_to": "PMS Calendar",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Work Competency",
+   "link_count": 0,
+   "link_to": "Work Competency",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "PMS",
+   "link_count": 5,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Target Set Up",
+   "link_count": 0,
+   "link_to": "Target Set Up",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Review",
+   "link_count": 0,
+   "link_to": "Review",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Performance Evaluation",
+   "link_count": 0,
+   "link_to": "Performance Evaluation",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Appeal PMS",
+   "link_count": 0,
+   "link_to": "Appeal PMS",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "PMS Unfreeze",
+   "link_count": 0,
+   "link_to": "PMS Unfreeze",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Reports",
+   "link_count": 1,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "PMS Report",
+   "link_count": 0,
+   "link_to": "PMS Report",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  }
+ ],
+ "modified": "2026-11-09 10:03:50.218761",
  "modified_by": "Administrator",
  "module": "Performance",
  "module_onboarding": "Performance Onboarding",
@@ -44,161 +181,6 @@
  "roles": [],
  "sequence_id": 7.0,
  "shortcuts": [],
- "sidebar_items": [
-  {
-   "child": 0,
-   "collapsible": 1,
-   "icon": "house",
-   "indent": 0,
-   "keep_closed": 0,
-   "label": "Home",
-   "link_to": "Performance",
-   "link_type": "Workspace",
-   "open_in_new_tab": 1,
-   "show_arrow": 0,
-   "type": "Link"
-  },
-  {
-   "child": 0,
-   "collapsible": 1,
-   "icon": "goal",
-   "indent": 0,
-   "keep_closed": 0,
-   "label": "Goal",
-   "link_to": "Goal",
-   "link_type": "DocType",
-   "open_in_new_tab": 1,
-   "show_arrow": 0,
-   "type": "Link"
-  },
-  {
-   "child": 0,
-   "collapsible": 1,
-   "icon": "orbit",
-   "indent": 0,
-   "keep_closed": 0,
-   "label": "Appraisal Cycle",
-   "link_to": "Appraisal Cycle",
-   "link_type": "DocType",
-   "open_in_new_tab": 1,
-   "show_arrow": 0,
-   "type": "Link"
-  },
-  {
-   "child": 0,
-   "collapsible": 1,
-   "icon": "arrow-up",
-   "indent": 0,
-   "keep_closed": 0,
-   "label": "Appraisal",
-   "link_to": "Appraisal",
-   "link_type": "DocType",
-   "open_in_new_tab": 1,
-   "show_arrow": 0,
-   "type": "Link"
-  },
-  {
-   "child": 0,
-   "collapsible": 1,
-   "icon": "trending-up",
-   "indent": 0,
-   "keep_closed": 0,
-   "label": "Employee Performance Feedback",
-   "link_to": "Employee Performance Feedback",
-   "link_type": "DocType",
-   "open_in_new_tab": 1,
-   "show_arrow": 0,
-   "type": "Link"
-  },
-  {
-   "child": 0,
-   "collapsible": 1,
-   "icon": "graduation-cap",
-   "indent": 0,
-   "keep_closed": 0,
-   "label": "Employee Promotion",
-   "link_to": "Employee Promotion",
-   "link_type": "DocType",
-   "open_in_new_tab": 1,
-   "show_arrow": 0,
-   "type": "Link"
-  },
-  {
-   "child": 0,
-   "collapsible": 1,
-   "icon": "notepad-text",
-   "indent": 1,
-   "keep_closed": 1,
-   "label": "Reports",
-   "link_type": "DocType",
-   "open_in_new_tab": 1,
-   "show_arrow": 0,
-   "type": "Section Break"
-  },
-  {
-   "child": 1,
-   "collapsible": 1,
-   "indent": 0,
-   "keep_closed": 0,
-   "label": "Appraisal Overview",
-   "link_to": "Appraisal Overview",
-   "link_type": "Report",
-   "open_in_new_tab": 1,
-   "show_arrow": 0,
-   "type": "Link"
-  },
-  {
-   "child": 0,
-   "collapsible": 1,
-   "icon": "database",
-   "indent": 1,
-   "keep_closed": 1,
-   "label": "Setup",
-   "link_type": "DocType",
-   "open_in_new_tab": 1,
-   "show_arrow": 0,
-   "type": "Section Break"
-  },
-  {
-   "child": 1,
-   "collapsible": 1,
-   "icon": "",
-   "indent": 0,
-   "keep_closed": 0,
-   "label": "Appraisal Template",
-   "link_to": "Appraisal Template",
-   "link_type": "DocType",
-   "open_in_new_tab": 1,
-   "show_arrow": 0,
-   "type": "Link"
-  },
-  {
-   "child": 1,
-   "collapsible": 1,
-   "icon": "",
-   "indent": 0,
-   "keep_closed": 0,
-   "label": "KRA",
-   "link_to": "KRA",
-   "link_type": "DocType",
-   "open_in_new_tab": 1,
-   "show_arrow": 0,
-   "type": "Link"
-  },
-  {
-   "child": 1,
-   "collapsible": 1,
-   "icon": "",
-   "indent": 0,
-   "keep_closed": 0,
-   "label": "Employee Feedback Criteria",
-   "link_to": "Employee Feedback Criteria",
-   "link_type": "DocType",
-   "open_in_new_tab": 1,
-   "show_arrow": 0,
-   "type": "Link"
-  }
- ],
  "standard": 1,
  "title": "Performance",
  "type": "Workspace"

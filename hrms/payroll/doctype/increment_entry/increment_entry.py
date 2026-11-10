@@ -222,13 +222,25 @@ class IncrementEntry(Document):
 				payscale_maximum   = grade.upper_limit 
 
 				# added by Dawa Tshering
-				if flt(total_months) >= 12:
-					increment = round(flt(payscale_increment), 0)
+				if payscale_increment_method=='Lumpsum':
+					if flt(total_months) >= 12:
+						increment = round(flt(payscale_increment), 0)
+					else:
+						increment = round(flt(payscale_increment)/12 * flt(total_months), 0)
+					new_basic = flt(old_basic) + flt(increment)
+					if flt(new_basic) > flt(payscale_maximum):
+						new_basic = flt(payscale_maximum)
+
 				else:
-					increment = round(flt(payscale_increment)/12 * flt(total_months), 0)
-				new_basic = flt(old_basic) + flt(increment)
-				if flt(new_basic) > flt(payscale_maximum):
-					new_basic = flt(payscale_maximum)
+					if flt(total_months) >= 12:
+						increment = round(flt(old_basic)*flt(payscale_increment/100), 0)
+					else:
+						increment = round((flt(old_basic)*flt(payscale_increment/100))/12 * flt(total_months), 0)
+					new_basic = flt(old_basic) + flt(increment)
+					if flt(new_basic) > flt(payscale_maximum):
+						new_basic = flt(payscale_maximum)
+
+
 
 				'''
 				# Calculating increment

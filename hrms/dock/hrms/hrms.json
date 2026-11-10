@@ -6,7 +6,7 @@
  "idx": 0,
  "items": [
   {
-   "added": 0,
+   "added": 1,
    "hidden": 0,
    "icon": "briefcase-duotone",
    "link_to": "HR Setup",
@@ -14,7 +14,7 @@
    "title": "HR Setup"
   },
   {
-   "added": 0,
+   "added": 1,
    "hidden": 0,
    "icon": "time-clock-duotone",
    "link_to": "Shift & Attendance",
@@ -22,7 +22,7 @@
    "title": "Shift & Attendance"
   },
   {
-   "added": 0,
+   "added": 1,
    "hidden": 0,
    "icon": "tree-palm-duotone",
    "link_to": "Leaves",
@@ -30,7 +30,7 @@
    "title": "Leaves"
   },
   {
-   "added": 0,
+   "added": 1,
    "hidden": 0,
    "icon": "receipt-card-duotone",
    "link_to": "Expenses",
@@ -38,7 +38,7 @@
    "title": "Expenses"
   },
   {
-   "added": 0,
+   "added": 1,
    "hidden": 0,
    "icon": "wallet-duotone",
    "link_to": "Payroll",
@@ -46,7 +46,7 @@
    "title": "Payroll"
   },
   {
-   "added": 0,
+   "added": 1,
    "hidden": 0,
    "icon": "podium-duotone",
    "link_to": "Performance",
@@ -54,7 +54,7 @@
    "title": "Performance"
   },
   {
-   "added": 0,
+   "added": 1,
    "hidden": 0,
    "icon": "user-clock-duotone",
    "link_to": "Tenure",
@@ -62,7 +62,7 @@
    "title": "Tenure"
   },
   {
-   "added": 0,
+   "added": 1,
    "hidden": 0,
    "icon": "user-search-duotone",
    "link_to": "Recruitment",
@@ -70,7 +70,7 @@
    "title": "Recruitment"
   },
   {
-   "added": 0,
+   "added": 1,
    "hidden": 0,
    "icon": "coins-percent-duotone",
    "link_to": "Tax & Benefits",
@@ -78,7 +78,7 @@
    "title": "Tax & Benefits"
   }
  ],
- "modified": "2026-10-05 12:30:00.000000",
+ "modified": "2026-11-05 11:40:11.503255",
  "modified_by": "Administrator",
  "name": "hrms",
  "owner": "Administrator",
