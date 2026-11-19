@@ -2,6 +2,25 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on("Holiday List Assignment", {
+	setup(frm) {
+		frm.set_query("assigned_to", () => {
+			if (frm.doc.applicable_for === "Branch") {
+				return {
+					filters: {
+						company: frm.doc.company || "",
+						disabled: 0,
+					},
+				};
+			}
+			return {};
+		});
+	},
+	
+	company(frm) {
+		if (frm.doc.applicable_for === "Branch") {
+			frm.set_value("assigned_to", "");
+		}
+	},
 	refresh: function (frm) {
 		frm.trigger("switch_assigned_to_label");
 	},
@@ -18,6 +37,7 @@ frappe.ui.form.on("Holiday List Assignment", {
 	},
 	clear_fields: function (frm) {
 		frm.set_value("assigned_to", "");
+		frm.set_value("company", "");
 		frm.set_value("employee_name", "");
 		frm.set_value("employee_company", "");
 	},

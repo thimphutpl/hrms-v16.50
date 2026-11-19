@@ -136,40 +136,89 @@ def get_holiday_list_ranges_for_employees(
 	end_date: date | str,
 	raise_exception: bool = False,
 ) -> dict[str, list[frappe._dict]]:
-	"""
-	Resolves the holiday list in effect on every date of [start_date, end_date] for many employees,
-	fetching all of their and their companies' assignments in a single query. An assignment stays in
-	effect until the next assignment starts, exactly as in `get_holiday_list_for_employee`. Dates before
-	the employee's first assignment use the company's assignments, and dates before both use the
-	earliest assignment.
-
-	{"EMP-001": [{"holiday_list": "HL-1", "from_date": date, "to_date": date}, ...]}
-	"""
 	if not employee_company_map:
 		return {}
 
 	start_date = getdate(start_date)
 	end_date = getdate(end_date)
-	companies = list({company for company in employee_company_map.values() if company})
 
-	assignments = get_holiday_list_assignments(list(employee_company_map) + companies)
-	effective_ranges = build_effective_date_ranges_for_holiday_assignments(assignments, start_date, end_date)
+	employee_rows = frappe.get_all(
+		"Employee",
+		filters={"name": ["in", list(employee_company_map)]},
+		fields=["name", "company", "branch"],
+	)
+	details = {row.name: row for row in employee_rows}
 
-	employee_holiday_list_ranges = {}
+	branches = {row.branch for row in employee_rows if row.branch}
+	branch_companies = {}
+	if branches:
+		branch_companies = {
+			row.name: row.company
+			for row in frappe.get_all(
+				"Branch",
+				filters={"name": ["in", list(branches)]},
+				fields=["name", "company"],
+			)
+		}
+
+	assignments = get_typed_holiday_list_assignments(
+		list(employee_company_map),
+		branches,
+		list(employee_company_map.values()),
+	)
+
+	result = {}
 	for employee, company in employee_company_map.items():
+		row = details.get(employee)
+		branch = row.branch if row and row.company == company else None
+		if branch_companies.get(branch) != company:
+			branch = None
+
+		employee_assignments = assignments.get(("Employee", employee), [])
+		company_assignments = assignments.get(("Company", company), [])
+		branch_assignments = [
+			a
+			for a in assignments.get(("Branch", branch), [])
+			if a.company == company
+		]
+
+		effective = build_effective_date_ranges_for_holiday_assignments(
+			{
+				"employee": employee_assignments,
+				"branch": branch_assignments,
+				"company": company_assignments,
+			},
+			start_date,
+			end_date,
+		)
+
+		fallback = fill_employee_holiday_list_date_gaps_with_company_holiday_list(
+			effective.get("branch", []),
+			effective.get("company", []),
+			start_date,
+			end_date,
+		)
 		ranges = fill_employee_holiday_list_date_gaps_with_company_holiday_list(
-			effective_ranges.get(employee, []), effective_ranges.get(company, []), start_date, end_date
+			effective.get("employee", []),
+			fallback,
+			start_date,
+			end_date,
 		)
 		ranges = fill_uncovered_dates_with_assigned_holiday_list(
-			ranges, assignments.get(employee, []), assignments.get(company, []), start_date, end_date
+			ranges,
+			employee_assignments,
+			company_assignments,
+			start_date,
+			end_date,
+			branch_assignments=branch_assignments,
 		)
 
 		if ranges:
-			employee_holiday_list_ranges[employee] = ranges
+			result[employee] = ranges
 		elif raise_exception:
 			throw_no_holiday_list_assigned(employee, company, start_date)
 
-	return employee_holiday_list_ranges
+	return result
 
 
 def fill_uncovered_dates_with_assigned_holiday_list(
@@ -178,6 +227,7 @@ def fill_uncovered_dates_with_assigned_holiday_list(
 	company_assignments: list[dict],
 	start_date: date,
 	end_date: date,
+	branch_assignments=None,
 ) -> list[frappe._dict]:
 	"""
 	Dates before the first assignment resolve like a single date would. Adjacent ranges using the
@@ -196,7 +246,13 @@ def fill_uncovered_dates_with_assigned_holiday_list(
 	for holiday_list_range in [*sorted(ranges, key=lambda r: r["from_date"]), None]:
 		gap_end = add_days(holiday_list_range["from_date"], -1) if holiday_list_range else end_date
 		if current <= gap_end:
-			assignment = resolve_holiday_list_assignment(employee_assignments, company_assignments, current)
+			# assignment = resolve_holiday_list_assignment(employee_assignments, company_assignments, current)
+			assignment = resolve_holiday_list_assignment(
+				employee_assignments,
+				company_assignments,
+				current,
+				branch_assignments=branch_assignments,
+			)
 			if assignment:
 				add_range(assignment.holiday_list, current, gap_end)
 
@@ -212,27 +268,85 @@ def fill_uncovered_dates_with_assigned_holiday_list(
 
 
 def resolve_holiday_list_assignment(
-	employee_assignments: list[dict], company_assignments: list[dict], as_on: date
+	employee_assignments: list[dict],
+	company_assignments: list[dict],
+	as_on: date,
+	branch_assignments=None,
 ) -> frappe._dict | None:
-	"""
-	Latest assignment starting on or before `as_on`, employee first and company second.
-	Dates before the first assignment fall back to the earliest one.
-	"""
-	for assignments in (employee_assignments, company_assignments):
-		active = [a for a in assignments if getdate(a.from_date) <= as_on]
+	groups = (
+		employee_assignments,
+		branch_assignments or [],
+		company_assignments,
+	)
+
+	for assignments in groups:
+		active = [
+			a for a in assignments
+			if getdate(a.from_date) <= as_on
+		]
 		if active:
 			return active[-1]
 
-	for assignments in (employee_assignments, company_assignments):
+	# Preserve the existing behaviour before the first assignment.
+	for assignments in groups:
 		if assignments:
 			return assignments[0]
 
 	return None
 
 
-def get_holiday_list_assignments(assigned_to_list: list[str]) -> dict[str, list[frappe._dict]]:
-	"""Submitted assignments of the given employees and companies, ordered by from_date"""
-	assigned_to_list = [assigned_to for assigned_to in assigned_to_list if assigned_to]
+def get_holiday_list_for_employee(
+	employee: str,
+	raise_exception: bool = True,
+	as_on: date | str | None = None,
+	as_dict: bool = False,
+) -> str:
+	as_on = getdate(as_on)
+	details = frappe.db.get_value(
+		"Employee", employee, ["company", "branch"], as_dict=True
+	) or frappe._dict()
+
+	company = details.company
+	branch = details.branch
+
+	if branch and frappe.db.get_value("Branch", branch, "company") != company:
+		branch = None
+
+	assignments = get_typed_holiday_list_assignments(
+		[employee], [branch], [company]
+	)
+	branch_assignments = [
+		a
+		for a in assignments.get(("Branch", branch), [])
+		if a.company == company
+	]
+
+	assignment = resolve_holiday_list_assignment(
+		assignments.get(("Employee", employee), []),
+		assignments.get(("Company", company), []),
+		as_on,
+		branch_assignments=branch_assignments,
+	)
+
+	if not assignment:
+		if raise_exception:
+			throw_no_holiday_list_assigned(employee, company, as_on)
+		return None
+
+	if as_dict:
+		return frappe._dict(
+			holiday_list=assignment.holiday_list,
+			from_date=assignment.from_date,
+		)
+
+	return assignment.holiday_list
+
+def get_holiday_list_assignments(
+	assigned_to_list: list[str],
+) -> dict[str, list[frappe._dict]]:
+	assigned_to_list = [
+		assigned_to for assigned_to in assigned_to_list if assigned_to
+	]
 	if not assigned_to_list:
 		return {}
 
@@ -251,27 +365,66 @@ def get_holiday_list_assignments(assigned_to_list: list[str]) -> dict[str, list[
 		assignment_map.setdefault(assignment.assigned_to, []).append(assignment)
 
 	return assignment_map
+def get_typed_holiday_list_assignments(
+	employees, branches, companies
+):
+	targets = {
+		"Employee": set(employees),
+		"Branch": set(branches),
+		"Company": set(companies),
+	}
+	names = {
+		name
+		for values in targets.values()
+		for name in values
+		if name
+	}
+	if not names:
+		return {}
 
-
-def get_holiday_list_for_employee(
-	employee: str, raise_exception: bool = True, as_on: date | str | None = None, as_dict: bool = False
-) -> str:
-	as_on = getdate(as_on)
-	company = frappe.db.get_value("Employee", employee, "company")
-	assignments = get_holiday_list_assignments([employee, company])
-	assignment = resolve_holiday_list_assignment(
-		assignments.get(employee, []), assignments.get(company, []), as_on
+	rows = frappe.get_all(
+		"Holiday List Assignment",
+		filters={
+			"assigned_to": ["in", list(names)],
+			"docstatus": 1,
+		},
+		fields=[
+			"applicable_for",
+			"assigned_to",
+			"holiday_list",
+			"from_date",
+			"company",
+		],
+		order_by="from_date asc, name asc",
 	)
 
-	if not assignment:
-		if raise_exception:
-			throw_no_holiday_list_assigned(employee, company, as_on)
-		return None
+	assignment_map = {}
+	for row in rows:
+		if row.assigned_to in targets.get(row.applicable_for, set()):
+			key = (row.applicable_for, row.assigned_to)
+			assignment_map.setdefault(key, []).append(row)
 
-	if as_dict:
-		return frappe._dict(holiday_list=assignment.holiday_list, from_date=assignment.from_date)
+	return assignment_map
 
-	return assignment.holiday_list
+# def get_holiday_list_for_employee(
+# 	employee: str, raise_exception: bool = True, as_on: date | str | None = None, as_dict: bool = False
+# ) -> str:
+# 	as_on = getdate(as_on)
+# 	company = frappe.db.get_value("Employee", employee, "company")
+# 	assignments = get_holiday_list_assignments([employee, company])
+# 	assignment = resolve_holiday_list_assignment(
+# 		assignments.get(employee, []), assignments.get(company, []), as_on
+# 	)
+
+# 	if not assignment:
+# 		if raise_exception:
+# 			throw_no_holiday_list_assigned(employee, company, as_on)
+# 		return None
+
+# 	if as_dict:
+# 		return frappe._dict(holiday_list=assignment.holiday_list, from_date=assignment.from_date)
+
+# 	return assignment.holiday_list
 
 
 def throw_no_holiday_list_assigned(employee: str, company: str, as_on: date):

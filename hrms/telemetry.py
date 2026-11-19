@@ -238,13 +238,14 @@ def on_milestone_submit(doc, method=None):
 
 
 def on_payroll_entry_submit(doc, method=None):
+	#frappe.throw(str(doc))
 	capture(
 		"payroll_entry_submitted",
 		{
 			"payroll_frequency": doc.payroll_frequency,
 			"employee_count": doc.number_of_employees or len(doc.employees or []),
 			"validate_attendance": bool(doc.validate_attendance),
-			"based_on_timesheet": bool(doc.salary_slip_based_on_timesheet),
+			#"based_on_timesheet": bool(doc.salary_slip_based_on_timesheet),
 			"days": _duration_days(doc.start_date, doc.end_date),
 		},
 	)

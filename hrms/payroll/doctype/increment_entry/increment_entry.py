@@ -31,8 +31,33 @@ class IncrementEntry(Document):
 	def on_submit(self):
 		self.create_salary_increments()
 
-	def before_submit(self):
-		pass
+	    def before_submit(self):
+        self._validate_disciplinary_eligibility()
+
+    def _validate_disciplinary_eligibility(self):
+        employee_ids = sorted({
+            row.employee for row in self.employees if row.employee
+        })
+        if not employee_ids:
+            return
+
+        blocked_employee_ids = frappe.get_all(
+            "Disciplinary",
+            filters={
+                "parenttype": "Employee",
+                "parentfield": "table_lxgr",
+                "parent": ["in", employee_ids],
+            },
+            pluck="parent",
+            distinct=True,
+        )
+
+        if blocked_employee_ids:
+            frappe.throw(
+                _("These employees are currently ineligible for an increment: {0}").format(
+                    ", ".join(sorted(blocked_employee_ids))
+                )
+            )
 
 	def on_cancel(self):
 		self.remove_salary_increments()
@@ -54,6 +79,11 @@ class IncrementEntry(Document):
 			where t1.status = 'Active'
 			and TIMESTAMPDIFF(MONTH, date_of_joining, '{}') > eg.minimum_months
 			and t1.increment_cycle = '{}' 
+			and not exists (select 1
+					from `tabDisciplinary` d
+					where d.parent = t1.name
+					and d.parenttype = 'Employee'
+					and d.parentfield = 'table_lxgr')
 			and not exists(select 1
 					from `tabSalary Increment` as t3
 					where t3.employee = t1.name
@@ -122,7 +152,9 @@ class IncrementEntry(Document):
 		"""
 			Creates salary slip for selected employees if already not created
 		"""
+
 		self.check_permission('write')
+		self._validate_disciplinary_eligibility()
 		self.created = 1
 		emp_list = [d['employee'] for d in self.get_emp_list()]
 
@@ -138,6 +170,7 @@ class IncrementEntry(Document):
 				# frappe.enqueue(create_salary_increments_for_employees, timeout=600, employees=emp_list, args=args)
 				create_salary_increments_for_employees(emp_list, args, publish_progress=False)
 			else:
+				#frappe
 				create_salary_increments_for_employees(emp_list, args, publish_progress=False)
 				# since this method is called via frm.call this doc needs to be updated manually
 				self.reload()
@@ -255,6 +288,7 @@ class IncrementEntry(Document):
 				else:
 					new_basic = flt(old_basic)
 				'''
+				
 				return new_basic, increment, old_basic
 
 	@frappe.whitelist()
@@ -310,6 +344,7 @@ def remove_salary_increments_for_employees(increment_entry, salary_increments, p
 		frappe.msgprint(_("Could not submit some Salary Increments"))
 
 def create_salary_increments_for_employees(employees, args, publish_progress=True):
+	
 	salary_increments_exists_for = get_existing_salary_increments(employees, args)
 	count=0
 	increment_entry = frappe.get_doc("Increment Entry", args.increment_entry)
@@ -378,3 +413,16 @@ def submit_salary_increments_for_employees(increment_entry, salary_increments, p
 
 	if not_submitted_si:
 		frappe.msgprint(_("Could not submit some Salary Increments"))
+
+@frappe.whitelist()
+def fill_employee_details(self):
+	employees = self.get_emp_list()
+	self.set("employees", [])
+
+	for employee in employees:
+		self.append("employees", employee)
+
+	self.number_of_employees = len(employees)
+
+	if not employees:
+		frappe.msgprint(_("No employees for the mentioned criteria"))

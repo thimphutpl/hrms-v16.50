@@ -44,18 +44,29 @@ frappe.ui.form.on('Increment Entry', {
 		}
 	},
 
+	// get_employee_details: function (frm) {
+	// 	console.log('here')
+	// 	return frappe.call({
+	// 		method: 'fill_employee_details',
+	// 		doc: frm.doc,
+	// 		callback: function(r) {
+	// 			if (r.docs[0].employees){
+	// 				frm.save();
+	// 				frm.refresh();
+	// 			}
+	// 		}
+	// 	})
+	// },
 	get_employee_details: function (frm) {
-		console.log('here')
 		return frappe.call({
-			method: 'fill_employee_details',
+			method: "fill_employee_details",
 			doc: frm.doc,
-			callback: function(r) {
-				if (r.docs[0].employees){
-					frm.save();
-					frm.refresh();
+			callback: function (r) {
+				if (!r.exc && r.docs && r.docs.length) {
+					return frm.save();
 				}
 			}
-		})
+		});
 	},
 
 	create_salary_increments: function(frm) {

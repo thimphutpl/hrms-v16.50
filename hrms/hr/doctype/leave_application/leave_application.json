@@ -5,7 +5,6 @@
  "creation": "2013-02-20 11:18:11",
  "description": "Apply / Approve Leaves",
  "doctype": "DocType",
- "documentation": "https://docs.frappe.io/hr/leave-application",
  "document_type": "Document",
  "engine": "InnoDB",
  "field_order": [
@@ -29,6 +28,8 @@
   "leave_approver",
   "leave_approver_name",
   "follow_via_email",
+  "reports_to",
+  "reports_name",
   "column_break_18",
   "posting_date",
   "status",
@@ -37,7 +38,8 @@
   "color",
   "column_break_17",
   "letter_head",
-  "amended_from"
+  "amended_from",
+  "workflow_state"
  ],
  "fields": [
   {
@@ -157,29 +159,32 @@
   {
    "fieldname": "leave_approver",
    "fieldtype": "Link",
+   "hidden": 1,
+   "ignore_user_permissions": 1,
    "label": "Leave Approver",
    "options": "User"
   },
   {
+   "fetch_from": "leave_approver.full_name",
    "fieldname": "leave_approver_name",
    "fieldtype": "Data",
-   "label": "Leave Approver Name",
-   "read_only": 1
+   "hidden": 1,
+   "label": "Leave Approver Name"
   },
   {
    "fieldname": "column_break_18",
    "fieldtype": "Column Break"
   },
   {
-   "default": "Open",
+   "default": "Approved",
    "fieldname": "status",
    "fieldtype": "Select",
+   "hidden": 1,
    "in_standard_filter": 1,
    "label": "Status",
    "no_copy": 1,
-   "options": "Open\nApproved\nRejected\nCancelled",
-   "permlevel": 1,
-   "reqd": 1
+   "options": "Approved\nCancelled",
+   "permlevel": 1
   },
   {
    "default": "Today",
@@ -249,14 +254,35 @@
    "fieldname": "sb_other_details",
    "fieldtype": "Section Break",
    "label": "Other Details"
+  },
+  {
+   "fieldname": "reports_to",
+   "fieldtype": "Link",
+   "ignore_user_permissions": 1,
+   "label": "Reports to",
+   "options": "User"
+  },
+  {
+   "fetch_from": "reports_to.full_name",
+   "fieldname": "reports_name",
+   "fieldtype": "Data",
+   "label": "Reports Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "workflow_state",
+   "fieldtype": "Link",
+   "label": "Workflow State",
+   "options": "Workflow State",
+   "read_only": 1
   }
  ],
- "icon": "plane",
+ "icon": "fa fa-calendar",
  "idx": 1,
  "is_submittable": 1,
  "links": [],
  "max_attachments": 3,
- "modified": "2026-10-05 15:00:00.000000",
+ "modified": "2026-11-17 14:48:37.343326",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Leave Application",
@@ -308,6 +334,7 @@
    "write": 1
   },
   {
+   "amend": 1,
    "cancel": 1,
    "delete": 1,
    "email": 1,
@@ -347,7 +374,7 @@
  ],
  "row_format": "Dynamic",
  "search_fields": "employee,employee_name,leave_type,from_date,to_date,total_leave_days",
- "sort_field": "creation",
+ "sort_field": "modified",
  "sort_order": "DESC",
  "states": [],
  "timeline_field": "employee",

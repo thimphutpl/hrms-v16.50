@@ -21,7 +21,8 @@ frappe.ui.form.on('Employee Transfer', {
 					"company": frm.doc.company,
 					"disabled": 0,
 					"is_division":1,
-					"is_section":0
+					"is_section":0,
+					"parent_department":frm.doc.new_department
 					//"is_unit":0
 				}
 			};
@@ -33,6 +34,7 @@ frappe.ui.form.on('Employee Transfer', {
 					"company": frm.doc.company,
 					"disabled":0,
 					"is_division":0,
+					
 					"is_section":1
 				}
 			};

@@ -12,6 +12,88 @@ PROCEED_WITH_FREQUENCY_CHANGE = False
 
 
 class HRSettings(Document):
+	# begin: auto-generated types
+	# This code is auto-generated. Do not modify anything in this block.
+
+	from typing import TYPE_CHECKING
+
+	if TYPE_CHECKING:
+		from frappe.types import DF
+
+		ada: DF.Link | None
+		afd: DF.Link | None
+		allow_employee_checkin_from_mobile_app: DF.Check
+		allow_geolocation_tracking: DF.Check
+		allow_multiple_shift_assignments: DF.Check
+		ama: DF.Link | None
+		auto_leave_encashment: DF.Check
+		ceo: DF.Link | None
+		check_vacancies: DF.Check
+		concept_note: DF.Link | None
+		concept_note_rejection: DF.Link | None
+		emp_created_by: DF.Literal["Naming Series", "Employee Number", "Full Name"]
+		employee_advance_approval_notification_template: DF.Link | None
+		employee_advance_status_notification_template: DF.Link | None
+		enable_multi_currency_expense_claim: DF.Data | None
+		encashment_approval_notification_template: DF.Link | None
+		encashment_status_notification_template: DF.Link | None
+		enote_approval_notification: DF.Link | None
+		enote_copyto_notification: DF.Link | None
+		enote_reviewer_notification: DF.Link | None
+		enote_status_notification: DF.Link | None
+		exit_questionnaire_notification_template: DF.Link | None
+		exit_questionnaire_web_form: DF.Link | None
+		expense_approver_mandatory_in_expense_claim: DF.Check
+		feedback_reminder_notification_template: DF.Link | None
+		frequency: DF.Literal["Weekly", "Monthly"]
+		hiring_sender: DF.Link | None
+		hiring_sender_email: DF.Data | None
+		hr_approver: DF.Link | None
+		hr_manager: DF.Link | None
+		hr_manager_name: DF.Data | None
+		iad: DF.Link | None
+		icthr: DF.Link | None
+		interview_reminder_template: DF.Link | None
+		is_basic_salary_for_ltc: DF.Check
+		leave_application_approval_notification_template: DF.Link | None
+		leave_application_status_notification_template: DF.Link | None
+		leave_approval_notification_template: DF.Link | None
+		leave_approver_mandatory_in_leave_application: DF.Check
+		leave_status_notification_template: DF.Link | None
+		ltc_fixed_amount: DF.Currency
+		minimum_month_required_for_ltc: DF.Data | None
+		overtime_approval_notification_template: DF.Link | None
+		overtime_limit: DF.Int
+		overtime_limit_type: DF.Literal["Per Day", "Per Week", "Per Month"]
+		overtime_status_notification_template: DF.Link | None
+		pc: DF.Link | None
+		prevent_self_expense_approval: DF.Data | None
+		prevent_self_leave_approval: DF.Check
+		prorate_ltc: DF.Check
+		remind_before: DF.Time | None
+		restrict_backdated_leave_application: DF.Check
+		retirement_age: DF.Data | None
+		return_day_dsa: DF.Literal["", "100", "70", "50", "20", "0"]
+		role_allowed_to_create_backdated_leave_application: DF.Link | None
+		send_birthday_reminders: DF.Check
+		send_holiday_reminders: DF.Check
+		send_interview_feedback_reminder: DF.Check
+		send_interview_reminder: DF.Check
+		send_leave_notification: DF.Check
+		send_work_anniversary_reminders: DF.Check
+		sender: DF.Link | None
+		sender_email: DF.Data | None
+		show_leaves_of_all_department_members_in_calendar: DF.Check
+		standard_working_hours: DF.Float
+		sws: DF.Link | None
+		travel_authorization_approval_notification_template: DF.Link | None
+		travel_authorization_status_notification_template: DF.Link | None
+		travel_claim_approval_notification_template: DF.Link | None
+		travel_claim_status_notification_template: DF.Link | None
+		unlink_payment_on_cancellation_of_employee_advance: DF.Check
+		user_creation: DF.Link | None
+	# end: auto-generated types
+
 	def validate(self):
 		self.set_naming_series()
 

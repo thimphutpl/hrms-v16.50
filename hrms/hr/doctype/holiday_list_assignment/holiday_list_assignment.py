@@ -19,13 +19,14 @@ class HolidayListAssignment(Document):
 		return frappe.get_value("Holiday List", self.holiday_list, "to_date") if self.holiday_list else None
 
 	def validate(self):
+		self.validate_branch()
 		self.validate_assignment_start_date()
 		self.validate_existing_assignment()
 
 	def validate_existing_assignment(self):
 		holiday_list = frappe.db.exists(
 			"Holiday List Assignment",
-			{"assigned_to": self.assigned_to, "from_date": self.from_date, "docstatus": 1},
+			{"applicable_for": self.applicable_for, "assigned_to": self.assigned_to, "from_date": self.from_date, "docstatus": 1, "name": ["!=", self.name],},
 		)
 
 		if holiday_list:
@@ -46,3 +47,26 @@ class HolidayListAssignment(Document):
 		assignment_start_date = getdate(self.from_date)
 		if (assignment_start_date < holiday_list_start) or (assignment_start_date > holiday_list_end):
 			frappe.throw(_("Assignment start date cannot be outside holiday list dates"))
+
+	def validate_branch(self):
+		if self.applicable_for != "Branch":
+			return
+
+		if not self.company:
+			frappe.throw(_("Please select Company"))
+
+		branch = frappe.db.get_value(
+			"Branch",
+			self.assigned_to,
+			["company", "disabled"],
+			as_dict=True,
+		)
+
+		if not branch:
+			frappe.throw(_("Selected Branch does not exist"))
+
+		if branch.company != self.company:
+			frappe.throw(_("Selected Branch does not belong to the selected Company"))
+
+		if branch.disabled:
+			frappe.throw(_("Selected Branch is disabled"))

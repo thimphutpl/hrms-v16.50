@@ -10,6 +10,7 @@
   "section_break_wnwa",
   "naming_series",
   "applicable_for",
+  "company",
   "assigned_to",
   "employee_name",
   "employee_company",
@@ -25,6 +26,14 @@
    "fieldname": "section_break_wnwa",
    "fieldtype": "Section Break"
   },
+  {
+    "fieldname": "company",
+    "fieldtype": "Link",
+    "label": "Company",
+    "options": "Company",
+    "depends_on": "eval:doc.applicable_for == 'Branch'",
+    "mandatory_depends_on": "eval:doc.applicable_for == 'Branch'"
+   },
   {
    "fieldname": "amended_from",
    "fieldtype": "Link",
@@ -83,7 +92,7 @@
    "fieldname": "applicable_for",
    "fieldtype": "Select",
    "label": "Applicable For",
-   "options": "Employee\nCompany",
+   "options": "Employee\nCompany\nBranch",
    "reqd": 1
   },
   {

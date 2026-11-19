@@ -5,6 +5,7 @@
 import frappe
 from frappe import _
 from frappe.model.document import Document
+from frappe.model.mapper import get_mapped_doc
 from frappe.utils import getdate
 
 #from hrms.hr.utils import update_employee_work_history

@@ -873,7 +873,9 @@ class PayrollEntry(Document):
 		salary_slip_total = 0
 		salary_details = self.get_salary_slip_details()
 		
+		
 		posting        = frappe._dict()
+		
 		for salary_detail in salary_details:
 			#frappe.msgprint(str(salary_detail.gl_head))
 			#frappe.msgprint(f"GL Head: {str(salary_detail.gl_head)}, Party: {str(salary_detail.party)}, Party Type: {str(salary_detail.party_type)}")
@@ -971,7 +973,7 @@ class PayrollEntry(Document):
 				"reference_name"				: self.name,
 				"salary_component"				: "Net Pay"
 			})
-				
+			
 		if posting:
 			jv_name, v_title = None, ""
 			for i in posting:
@@ -1083,6 +1085,7 @@ class PayrollEntry(Document):
 				(case when ifnull(sc.make_party_entry,0) = 1 then t1.employee else 'Other' end)
 			order by t1.cost_center, sc.type, sc.name
 		""".format(self.fiscal_year, self.month, self.name),as_dict=1)
+		
 		return result
 
 	def get_cc_wise_entries(self, salary_component_pf):

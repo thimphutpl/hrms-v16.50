@@ -316,8 +316,8 @@ class SalaryStructure(Document):
 		return del_list_all
 
 def roundoff(amount):
-    amount = flt(amount)
-    return math.ceil(amount) if (amount - int(amount)) >= 0.5 else math.floor(amount)
+	amount = flt(amount)
+	return math.ceil(amount) if (amount - int(amount)) >= 0.5 else math.floor(amount)
 
 
 @frappe.whitelist()
