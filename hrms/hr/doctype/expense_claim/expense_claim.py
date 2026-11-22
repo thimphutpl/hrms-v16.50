@@ -25,7 +25,7 @@ from erpnext.controllers.accounts_controller import AccountsController
 import hrms
 from hrms.hr.utils import set_employee_name, share_doc_with_approver, validate_active_employee
 from hrms.mixins.pwa_notifications import PWANotificationsMixin
-
+from integrasuite.integrasuite_hr.doctype.custom_workflow.custom_workflow import custom_validate_workflow
 
 class InvalidExpenseApproverError(frappe.ValidationError):
 	pass
@@ -93,6 +93,7 @@ class ExpenseClaim(AccountsController, PWANotificationsMixin):
 		total_sanctioned_amount: DF.Currency
 		total_taxes_and_charges: DF.Currency
 		vehicle_log: DF.Link | None
+		workflow_state: DF.Link | None
 	# end: auto-generated types
 
 	def onload(self):
@@ -122,6 +123,7 @@ class ExpenseClaim(AccountsController, PWANotificationsMixin):
 
 		if flt(self.grand_total) > 0 and self.total_advance_amount:
 			self.is_paid = 0
+		custom_validate_workflow(self)
 
 	def set_status(self, update=False):
 		status = {"0": "Draft", "1": "Submitted", "2": "Cancelled","1":"Approved","0":"Rejected"}[cstr(self.docstatus or 0)]

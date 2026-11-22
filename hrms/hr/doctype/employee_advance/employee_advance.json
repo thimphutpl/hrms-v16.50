@@ -55,7 +55,8 @@
   "salary_structure",
   "repay_unclaimed_amount_from_salary",
   "mode_of_payment",
-  "amended_from"
+  "amended_from",
+  "workflow_state"
  ],
  "fields": [
   {
@@ -386,12 +387,18 @@
    "fieldtype": "Currency",
    "label": "Max Amount",
    "read_only": 1
+  },
+  {
+   "fieldname": "workflow_state",
+   "fieldtype": "Link",
+   "label": "Workflow State",
+   "options": "Workflow State"
   }
  ],
  "grid_page_length": 50,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-11-17 13:16:04.334131",
+ "modified": "2026-11-21 17:03:20.048924",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Employee Advance",

@@ -21,10 +21,43 @@ from hrms.hr.doctype.leave_ledger_entry.leave_ledger_entry import (
 )
 from hrms.hr.utils import set_employee_name, validate_active_employee
 from integrasuite.custom_function.hr_custom_function import get_basic_and_gross_pay, get_salary_tax
+from integrasuite.integrasuite_hr.doctype.custom_workflow.custom_workflow import custom_validate_workflow
 #from erpnext.custom_workflow import validate_workflow_states, notify_workflow_states
 
 
 class LeaveEncashment(Document):
+    # begin: auto-generated types
+    # This code is auto-generated. Do not modify anything in this block.
+
+    from typing import TYPE_CHECKING
+
+    if TYPE_CHECKING:
+        from frappe.types import DF
+
+        actual_encashable_days: DF.Float
+        amended_from: DF.Link | None
+        approver: DF.Link | None
+        approver_designation: DF.Link | None
+        approver_name: DF.Data | None
+        branch: DF.Link | None
+        company: DF.Link
+        cost_center: DF.Link | None
+        currency: DF.Link
+        employee: DF.Link
+        employee_name: DF.Data | None
+        encashment_amount: DF.Currency
+        encashment_date: DF.Date | None
+        encashment_days: DF.Float
+        journal_entry: DF.Data | None
+        journal_entry_status: DF.Data | None
+        leave_allocation: DF.Link | None
+        leave_balance: DF.Float
+        leave_period: DF.Link
+        leave_type: DF.Link
+        net_pay: DF.Currency
+        tax_amount: DF.Currency
+    # end: auto-generated types
+
     def validate(self):
         set_employee_name(self)
         validate_active_employee(self.employee)
@@ -35,6 +68,7 @@ class LeaveEncashment(Document):
         self.encashment_date = self.encashment_date or getdate()
         self.set_salary_structure()
         self.get_leave_details_for_encashment()
+        custom_validate_workflow(self)
 
     def set_salary_structure(self):
         self._salary_structure = frappe.db.get_value(
@@ -81,7 +115,7 @@ class LeaveEncashment(Document):
         pass
 
     def on_cancel(self):
-        notify_workflow_states(self)
+        # notify_workflow_states(self)
         self.ignore_linked_doctypes = ("GL Entry", "Payment Ledger Entry")
 
         if self.leave_allocation:

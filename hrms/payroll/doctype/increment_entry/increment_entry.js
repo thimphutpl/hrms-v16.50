@@ -63,6 +63,9 @@ frappe.ui.form.on('Increment Entry', {
 			doc: frm.doc,
 			callback: function (r) {
 				if (!r.exc && r.docs && r.docs.length) {
+					frm.refresh_field("employees");
+					frm.refresh_field("number_of_employees");
+					frm.dirty();
 					return frm.save();
 				}
 			}

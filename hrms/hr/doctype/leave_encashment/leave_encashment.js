@@ -2,12 +2,22 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on("Leave Encashment", {
-	onload: function (frm) {
-		// Ignore cancellation of doctype on cancel all.
-		frm.ignore_doctypes_on_cancel_all = ["Leave Ledger Entry"];
-		frm.set_query("employee", erpnext.queries.employee);
-	},
 	setup: function (frm) {
+		
+		if (frappe.session.user === "Administrator" || frappe.user.has_role("HR Manager") ||
+		frappe.user.has_role("HR User")) {
+            return;
+        }
+		
+        frm.set_query("employee", function () {
+            return {
+                filters: {
+                    user_id: frappe.session.user,
+                    status: "Active"
+                }
+            };
+       
+		});
 		frm.set_query("leave_type", function () {
 			return {
 				filters: {
@@ -22,9 +32,17 @@ frappe.ui.form.on("Leave Encashment", {
 				},
 			};
 		});
-		frm.set_query("employee", erpnext.queries.employee);
+
+		// frm.set_query("employee", erpnext.queries.employee);
 		       
 	},
+
+	onload: function (frm) {
+		// Ignore cancellation of doctype on cancel all.
+		frm.ignore_doctypes_on_cancel_all = ["Leave Ledger Entry"];
+		frm.set_query("employee", erpnext.queries.employee);
+	},
+	
 	refresh: function (frm) {
 		refresh_html(frm);
 		

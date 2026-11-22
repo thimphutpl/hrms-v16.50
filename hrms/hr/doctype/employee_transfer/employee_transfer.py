@@ -7,7 +7,7 @@ from frappe import _
 from frappe.model.document import Document
 from frappe.model.mapper import get_mapped_doc
 from frappe.utils import getdate
-
+from integrasuite.integrasuite_hr.doctype.custom_workflow.custom_workflow import custom_validate_workflow
 #from hrms.hr.utils import update_employee_work_history
 
 
@@ -70,6 +70,7 @@ class EmployeeTransfer(Document):
 		self.validate_employee_eligibility()
 		if frappe.get_value("Employee", self.employee, "status") == "Left":
 			frappe.throw(_("Cannot transfer Employee with status Left"))		
+		custom_validate_workflow(self)
 	def before_submit(self):
 		if getdate(self.transfer_date) > getdate():
 			frappe.throw(_("Employee Transfer cannot be submitted before Transfer Date "),

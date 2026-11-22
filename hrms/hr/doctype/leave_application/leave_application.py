@@ -39,7 +39,7 @@ from hrms.hr.utils import (
 from hrms.mixins.pwa_notifications import PWANotificationsMixin
 from hrms.utils import get_employee_email
 
-#from integrasuite.integrasuite_hr.doctype.custom_workflow.custom_workflow import custom_validate_workflow
+from integrasuite.integrasuite_hr.doctype.custom_workflow.custom_workflow import custom_validate_workflow
 
 class LeaveDayBlockedError(frappe.ValidationError):
 	pass
@@ -126,7 +126,7 @@ class LeaveApplication(Document, PWANotificationsMixin):
 		self.validate_block_days()
 		self.validate_salary_processed_days()
 		self.validate_attendance()
-		#custom_validate_workflow(self)
+		custom_validate_workflow(self)
 		self.set_half_day_date()
 		# if self.workflow_state != "Approved":
 		#     notify_workflow_states(self)

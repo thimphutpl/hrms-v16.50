@@ -26,6 +26,7 @@ from erpnext.accounts.doctype.journal_entry.journal_entry import get_default_ban
 # from erpnext.custom_workflow import validate_workflow_states, notify_workflow_states
 
 import hrms
+from integrasuite.integrasuite_hr.doctype.custom_workflow.custom_workflow import custom_validate_workflow
 from hrms.hr.utils import validate_active_employee
 from integrasuite.custom_function.hr_custom_function import (
     get_basic_and_gross_pay
@@ -84,7 +85,8 @@ class EmployeeAdvance(Document):
         repay_unclaimed_amount_from_salary: DF.Check
         return_amount: DF.Currency
         salary_structure: DF.Link | None
-        status: DF.Literal["Draft", "Paid", "unpaid", "Claimed", "Returned", "Partly Claimed and Returned", "Cancelled"]
+        status: DF.Literal["Draft", "Paid", "Unpaid", "Claimed", "Returned", "Partly Claimed and Returned", "Cancelled"]
+        workflow_state: DF.Link | None
     # end: auto-generated types
 
     def onload(self):
@@ -100,6 +102,7 @@ class EmployeeAdvance(Document):
         self.validate_dates()
         self.calculate_amount()
         self.set_max_amount()
+        custom_validate_workflow(self)
         # validate_workflow_states(self)
         # if self.workflow_state not in ("Approved by CEO","Cancelled","Draft"):
         # 	notify_workflow_states(self)

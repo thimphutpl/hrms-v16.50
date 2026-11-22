@@ -2,6 +2,7 @@
 // License: GNU General Public License v3. See license.txt
 
 frappe.ui.form.on("Leave Application", {
+	
 	setup: function (frm) {
 		// frm.set_query("reports_to", function () {
 		// 	return {

@@ -11,10 +11,37 @@ from frappe import _
 from erpnext.accounts.utils import get_fiscal_year
 from erpnext.setup.doctype.employee.employee import get_holiday_list_for_employee
 # from erpnext.accounts.doctype.business_activity.business_activity import get_default_ba
+from integrasuite.integrasuite_hr.doctype.custom_workflow.custom_workflow import custom_validate_workflow
 import calendar
 import datetime
 
 class IncrementEntry(Document):
+	# begin: auto-generated types
+	# This code is auto-generated. Do not modify anything in this block.
+
+	from typing import TYPE_CHECKING
+
+	if TYPE_CHECKING:
+		from frappe.types import DF
+		from integrasuite.integrasuite_hr.doctype.increment_employee_detail.increment_employee_detail import IncrementEmployeeDetail
+
+		amended_from: DF.Link | None
+		branch: DF.Link | None
+		company: DF.Link
+		department: DF.Link | None
+		designation: DF.Link | None
+		employee: DF.Link | None
+		employees: DF.Table[IncrementEmployeeDetail]
+		fiscal_year: DF.Link
+		month: DF.Literal["", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"]
+		month_name: DF.Literal["", "January", "February", "March", "April", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+		number_of_employees: DF.Int
+		posting_date: DF.Date
+		salary_increments_created: DF.Check
+		salary_increments_submitted: DF.Check
+		workflow_state: DF.Link | None
+	# end: auto-generated types
+
 	def onload(self):
 		if not self.docstatus==1 or self.salary_increments_submitted:
 				return
@@ -27,37 +54,38 @@ class IncrementEntry(Document):
 	def validate(self):
 		self.set_month_dates()
 		self.number_of_employees = len(self.employees)
+		custom_validate_workflow(self)
 
 	def on_submit(self):
 		self.create_salary_increments()
 
-	    def before_submit(self):
-        self._validate_disciplinary_eligibility()
+	def before_submit(self):
+		self._validate_disciplinary_eligibility()
 
-    def _validate_disciplinary_eligibility(self):
-        employee_ids = sorted({
-            row.employee for row in self.employees if row.employee
-        })
-        if not employee_ids:
-            return
+	def _validate_disciplinary_eligibility(self):
+		employee_ids = sorted({
+			row.employee for row in self.employees if row.employee
+		})
+		if not employee_ids:
+			return
 
-        blocked_employee_ids = frappe.get_all(
-            "Disciplinary",
-            filters={
-                "parenttype": "Employee",
-                "parentfield": "table_lxgr",
-                "parent": ["in", employee_ids],
-            },
-            pluck="parent",
-            distinct=True,
-        )
+		blocked_employee_ids = frappe.get_all(
+			"Disciplinary",
+			filters={
+				"parenttype": "Employee",
+				"parentfield": "table_lxgr",
+				"parent": ["in", employee_ids],
+			},
+			pluck="parent",
+			distinct=True,
+		)
 
-        if blocked_employee_ids:
-            frappe.throw(
-                _("These employees are currently ineligible for an increment: {0}").format(
-                    ", ".join(sorted(blocked_employee_ids))
-                )
-            )
+		if blocked_employee_ids:
+			frappe.throw(
+				_("These employees are currently ineligible for an increment: {0}").format(
+					", ".join(sorted(blocked_employee_ids))
+				)
+			)
 
 	def on_cancel(self):
 		self.remove_salary_increments()
@@ -293,15 +321,16 @@ class IncrementEntry(Document):
 
 	@frappe.whitelist()
 	def fill_employee_details(self):
-		self.set('employees', [])
 		employees = self.get_emp_list()
-		if not employees:
-			frappe.throw(_("No employees for the mentioned criteria"))
-	
-		for d in employees:
-			self.append('employees', d)
-	
+		self.set("employees", [])
+
+		for employee in employees:
+			self.append("employees", employee)
+
 		self.number_of_employees = len(employees)
+
+		if not employees:
+			frappe.msgprint(_("No employees for the mentioned criteria"))
 
 def get_salary_structure(employee, effective_date):
 	sst = frappe.db.sql("""
@@ -413,16 +442,3 @@ def submit_salary_increments_for_employees(increment_entry, salary_increments, p
 
 	if not_submitted_si:
 		frappe.msgprint(_("Could not submit some Salary Increments"))
-
-@frappe.whitelist()
-def fill_employee_details(self):
-	employees = self.get_emp_list()
-	self.set("employees", [])
-
-	for employee in employees:
-		self.append("employees", employee)
-
-	self.number_of_employees = len(employees)
-
-	if not employees:
-		frappe.msgprint(_("No employees for the mentioned criteria"))

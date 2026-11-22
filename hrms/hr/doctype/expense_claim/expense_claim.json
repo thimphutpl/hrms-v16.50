@@ -44,6 +44,7 @@
   "gain_loss_section",
   "total_exchange_gain_loss",
   "gain_loss_account",
+  "workflow_state",
   "accounting_details_tab",
   "accounting_details",
   "posting_date",
@@ -503,13 +504,19 @@
    "label": "Total Exchange Gain/Loss",
    "options": "Company:company:default_currency",
    "read_only": 1
+  },
+  {
+   "fieldname": "workflow_state",
+   "fieldtype": "Link",
+   "label": "Workflow State",
+   "options": "Workflow State"
   }
  ],
  "icon": "receipt",
  "idx": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-11-18 10:50:49.311085",
+ "modified": "2026-11-21 22:38:31.561287",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Expense Claim",
