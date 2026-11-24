@@ -20,12 +20,16 @@
   "to_date",
   "currency",
   "section_break_cprd",
-  "eligible_for_corporate_allowance",
   "eligible_for_contract_allowance",
   "contract_allowance_method",
   "contract_allowance",
   "conveyance_allowance_method",
   "conveyance_allowance",
+  "eligible_for_corporate_allowance",
+  "payment_methodcorporate_allownace",
+  "value_corporate_allowance",
+  "payment_methodconveyance_allowance",
+  "value_conveyance_allowance",
   "eligible_for_hra",
   "payment_method_house_rent_allowance",
   "value_house_rent_allowance",
@@ -413,12 +417,38 @@
    "fieldname": "eligible_for_corporate_allowance",
    "fieldtype": "Check",
    "label": " Eligible for Corporate allowance"
+  },
+  {
+   "depends_on": "eval:doc.eligible_for_corporate_allowance",
+   "fieldname": "payment_methodcorporate_allownace",
+   "fieldtype": "Select",
+   "label": "Payment Method(Corporate Allownace)",
+   "options": "Percent\nLumpsum"
+  },
+  {
+   "depends_on": "eval:doc.eligible_for_corporate_allowance",
+   "fieldname": "value_corporate_allowance",
+   "fieldtype": "Float",
+   "label": "Value (Corporate Allowance)"
+  },
+  {
+   "depends_on": "eval:doc.eligible_for_conveyance_allowance",
+   "fieldname": "payment_methodconveyance_allowance",
+   "fieldtype": "Select",
+   "label": "Payment Method(Conveyance Allowance)",
+   "options": "Lumpsum\nPercent"
+  },
+  {
+   "depends_on": "eval:doc.eligible_for_conveyance_allowance",
+   "fieldname": "value_conveyance_allowance",
+   "fieldtype": "Float",
+   "label": "Value (Conveyance Allowance)"
   }
  ],
  "icon": "fa fa-file-text",
  "idx": 1,
  "links": [],
- "modified": "2026-11-24 11:50:53.300941",
+ "modified": "2026-11-24 12:10:06.031025",
  "modified_by": "Administrator",
  "module": "Payroll",
  "name": "Salary Structure",

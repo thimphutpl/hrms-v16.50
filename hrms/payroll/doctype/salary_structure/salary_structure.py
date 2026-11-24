@@ -65,10 +65,14 @@ class SalaryStructure(Document):
         net_pay: DF.Currency
         payment_method_cash_handling_allowance: DF.Literal["", "Lumpsum", "Percent"]
         payment_method_house_rent_allowance: DF.Literal["Percent", "Lumpsum"]
+        payment_methodconveyance_allowance: DF.Literal["Lumpsum", "Percent"]
+        payment_methodcorporate_allownace: DF.Literal["Percent", "Lumpsum"]
         to_date: DF.Date | None
         total_deduction: DF.Currency
         total_earning: DF.Currency
         value_cha: DF.Float
+        value_conveyance_allowance: DF.Float
+        value_corporate_allowance: DF.Float
         value_house_rent_allowance: DF.Float
     # end: auto-generated types
 
