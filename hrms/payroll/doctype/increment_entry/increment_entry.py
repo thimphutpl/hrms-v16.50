@@ -60,32 +60,7 @@ class IncrementEntry(Document):
 		self.create_salary_increments()
 
 	def before_submit(self):
-		self._validate_disciplinary_eligibility()
-
-	def _validate_disciplinary_eligibility(self):
-		employee_ids = sorted({
-			row.employee for row in self.employees if row.employee
-		})
-		if not employee_ids:
-			return
-
-		blocked_employee_ids = frappe.get_all(
-			"Disciplinary",
-			filters={
-				"parenttype": "Employee",
-				"parentfield": "table_lxgr",
-				"parent": ["in", employee_ids],
-			},
-			pluck="parent",
-			distinct=True,
-		)
-
-		if blocked_employee_ids:
-			frappe.throw(
-				_("These employees are currently ineligible for an increment: {0}").format(
-					", ".join(sorted(blocked_employee_ids))
-				)
-			)
+		pass
 
 	def on_cancel(self):
 		self.remove_salary_increments()
@@ -107,11 +82,6 @@ class IncrementEntry(Document):
 			where t1.status = 'Active'
 			and TIMESTAMPDIFF(MONTH, date_of_joining, '{}') > eg.minimum_months
 			and t1.increment_cycle = '{}' 
-			and not exists (select 1
-					from `tabDisciplinary` d
-					where d.parent = t1.name
-					and d.parenttype = 'Employee'
-					and d.parentfield = 'table_lxgr')
 			and not exists(select 1
 					from `tabSalary Increment` as t3
 					where t3.employee = t1.name
@@ -182,7 +152,6 @@ class IncrementEntry(Document):
 		"""
 
 		self.check_permission('write')
-		self._validate_disciplinary_eligibility()
 		self.created = 1
 		emp_list = [d['employee'] for d in self.get_emp_list()]
 

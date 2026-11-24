@@ -20,6 +20,7 @@
   "to_date",
   "currency",
   "section_break_cprd",
+  "eligible_for_corporate_allowance",
   "eligible_for_contract_allowance",
   "contract_allowance_method",
   "contract_allowance",
@@ -406,12 +407,18 @@
    "fieldname": "value_cha",
    "fieldtype": "Float",
    "label": "Value (CHA)"
+  },
+  {
+   "default": "0",
+   "fieldname": "eligible_for_corporate_allowance",
+   "fieldtype": "Check",
+   "label": " Eligible for Corporate allowance"
   }
  ],
  "icon": "fa fa-file-text",
  "idx": 1,
  "links": [],
- "modified": "2026-01-15 12:19:25.129705",
+ "modified": "2026-11-24 11:50:53.300941",
  "modified_by": "Administrator",
  "module": "Payroll",
  "name": "Salary Structure",
@@ -453,6 +460,7 @@
    "write": 1
   }
  ],
+ "row_format": "Dynamic",
  "show_name_in_global_search": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
