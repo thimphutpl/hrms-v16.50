@@ -5,7 +5,7 @@
    "label": "Leave Applications by Type"
   }
  ],
- "content": "[{\"id\": \"eb5d486526\", \"type\": \"onboarding\", \"data\": {\"onboarding_name\": \"Leaves Onboarding\", \"col\": 12}}, {\"id\": \"2c95e54b53\", \"type\": \"chart\", \"data\": {\"chart_name\": \"Leave Applications by Type\", \"col\": 12}}, {\"id\": \"f219923446\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Number of Employees on Leave (Today)\", \"col\": 4}}, {\"id\": \"363b6269bd\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Number of Employees on Leave (This Month)\", \"col\": 4}}, {\"id\": \"d95373613c\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Holidays in this month\", \"col\": 4}}, {\"id\": \"TvtvbTZKV-\", \"type\": \"paragraph\", \"data\": {\"text\": \"\\u003cspan class=\\\"h4\\\"\\u003eMaster &amp; Reports\\u003c/span\\u003e\", \"col\": 12}}, {\"id\": \"TMaAvccpJg\", \"type\": \"card\", \"data\": {\"card_name\": \"Setup\", \"col\": 4}}, {\"id\": \"RAxo57iJr-\", \"type\": \"card\", \"data\": {\"card_name\": \"Allocation\", \"col\": 4}}, {\"id\": \"LVCo1kUt2g\", \"type\": \"card\", \"data\": {\"card_name\": \"Application\", \"col\": 4}}, {\"id\": \"LJjz306vni\", \"type\": \"card\", \"data\": {\"card_name\": \"Reports\", \"col\": 4}}]",
+ "content": "[{\"id\": \"2c95e54b53\", \"type\": \"chart\", \"data\": {\"chart_name\": \"Leave Applications by Type\", \"col\": 12}}, {\"id\": \"f219923446\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Number of Employees on Leave (Today)\", \"col\": 4}}, {\"id\": \"363b6269bd\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Number of Employees on Leave (This Month)\", \"col\": 4}}, {\"id\": \"d95373613c\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Holidays in this month\", \"col\": 4}}, {\"id\": \"TvtvbTZKV-\", \"type\": \"paragraph\", \"data\": {\"text\": \"\\u003cspan class=\\\"h4\\\"\\u003eMaster &amp; Reports\\u003c/span\\u003e\", \"col\": 12}}, {\"id\": \"TMaAvccpJg\", \"type\": \"card\", \"data\": {\"card_name\": \"Setup\", \"col\": 4}}, {\"id\": \"RAxo57iJr-\", \"type\": \"card\", \"data\": {\"card_name\": \"Allocation\", \"col\": 4}}, {\"id\": \"LVCo1kUt2g\", \"type\": \"card\", \"data\": {\"card_name\": \"Application\", \"col\": 4}}, {\"id\": \"LJjz306vni\", \"type\": \"card\", \"data\": {\"card_name\": \"Reports\", \"col\": 4}}]",
  "creation": "2022-08-20 16:06:26.672497",
  "custom_blocks": [],
  "docstatus": 0,
@@ -79,65 +79,6 @@
   {
    "hidden": 0,
    "is_query_report": 0,
-   "label": "Allocation",
-   "link_count": 5,
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Card Break"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Leave Allocation",
-   "link_count": 0,
-   "link_to": "Leave Allocation",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Leave Policy Assignment",
-   "link_count": 0,
-   "link_to": "Leave Policy Assignment",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Leave Control Panel",
-   "link_count": 0,
-   "link_to": "Leave Control Panel",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Leave Encashment",
-   "link_count": 0,
-   "link_to": "Leave Encashment",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Leave Travel Concession",
-   "link_count": 0,
-   "link_to": "Leave Travel Concession",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
    "label": "Application",
    "link_count": 2,
    "link_type": "DocType",
@@ -204,9 +145,78 @@
    "onboard": 0,
    "report_ref_doctype": "Attendance",
    "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Allocation",
+   "link_count": 6,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Leave Allocation",
+   "link_count": 0,
+   "link_to": "Leave Allocation",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Leave Policy Assignment",
+   "link_count": 0,
+   "link_to": "Leave Policy Assignment",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Leave Control Panel",
+   "link_count": 0,
+   "link_to": "Leave Control Panel",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Leave Encashment",
+   "link_count": 0,
+   "link_to": "Leave Encashment",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Leave Travel Concession",
+   "link_count": 0,
+   "link_to": "Leave Travel Concession",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Holiday List Assignment",
+   "link_count": 0,
+   "link_to": "Holiday List Assignment",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
   }
  ],
- "modified": "2026-11-05 11:21:28.516963",
+ "modified": "2026-11-26 22:55:55.817503",
  "modified_by": "Administrator",
  "module": "Leaves",
  "module_onboarding": "Leaves Onboarding",
