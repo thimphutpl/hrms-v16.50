@@ -35,6 +35,7 @@ class SalaryStructure(Document):
         contract_allowance_method: DF.Literal["Percent", "Lumpsum"]
         conveyance_allowance: DF.Float
         conveyance_allowance_method: DF.Literal["Lumpsum", "Percent"]
+        corporate_allowance_method: DF.Literal["Percent", "Lumpsum"]
         cost_center: DF.Link | None
         currency: DF.Link
         deductions: DF.Table[SalaryDetail]
@@ -66,7 +67,6 @@ class SalaryStructure(Document):
         payment_method_cash_handling_allowance: DF.Literal["", "Lumpsum", "Percent"]
         payment_method_house_rent_allowance: DF.Literal["Percent", "Lumpsum"]
         payment_methodconveyance_allowance: DF.Literal["Lumpsum", "Percent"]
-        payment_methodcorporate_allownace: DF.Literal["Percent", "Lumpsum"]
         to_date: DF.Date | None
         total_deduction: DF.Currency
         total_earning: DF.Currency

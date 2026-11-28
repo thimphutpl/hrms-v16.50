@@ -138,45 +138,6 @@
   {
    "hidden": 0,
    "is_query_report": 0,
-   "label": "Attendance",
-   "link_count": 3,
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Card Break"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Attendance",
-   "link_count": 0,
-   "link_to": "Attendance",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Attendance Request",
-   "link_count": 0,
-   "link_to": "Attendance Request",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Employee Attendance Tool",
-   "link_count": 0,
-   "link_to": "Employee Attendance Tool",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
    "label": "Increment and Promotion",
    "link_count": 4,
    "link_type": "DocType",
@@ -265,6 +226,16 @@
   {
    "hidden": 0,
    "is_query_report": 0,
+   "label": "Employee Benefits",
+   "link_count": 0,
+   "link_to": "Employee Benefits",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
    "label": "Overtime Application",
    "link_count": 0,
    "link_to": "Overtime Application",
@@ -275,15 +246,54 @@
   {
    "hidden": 0,
    "is_query_report": 0,
-   "label": "Employee Benefit Application",
-   "link_count": 0,
-   "link_to": "Employee Benefit Application",
+   "label": "Attendance",
+   "link_count": 4,
    "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Attendance",
+   "link_count": 0,
+   "link_to": "Attendance",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Attendance Request",
+   "link_count": 0,
+   "link_to": "Attendance Request",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Employee Attendance Tool",
+   "link_count": 0,
+   "link_to": "Employee Attendance Tool",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Monthly Attendance Sheet",
+   "link_count": 0,
+   "link_to": "Monthly Attendance Sheet",
+   "link_type": "Report",
    "onboard": 0,
    "type": "Link"
   }
  ],
- "modified": "2026-11-19 16:41:06.534334",
+ "modified": "2026-11-26 21:02:42.814956",
  "modified_by": "Administrator",
  "module": "HR Setup",
  "module_onboarding": "HR Onboarding",

@@ -26,7 +26,7 @@
   "conveyance_allowance_method",
   "conveyance_allowance",
   "eligible_for_corporate_allowance",
-  "payment_methodcorporate_allownace",
+  "corporate_allowance_method",
   "value_corporate_allowance",
   "payment_methodconveyance_allowance",
   "value_conveyance_allowance",
@@ -420,13 +420,6 @@
   },
   {
    "depends_on": "eval:doc.eligible_for_corporate_allowance",
-   "fieldname": "payment_methodcorporate_allownace",
-   "fieldtype": "Select",
-   "label": "Payment Method(Corporate Allownace)",
-   "options": "Percent\nLumpsum"
-  },
-  {
-   "depends_on": "eval:doc.eligible_for_corporate_allowance",
    "fieldname": "value_corporate_allowance",
    "fieldtype": "Float",
    "label": "Value (Corporate Allowance)"
@@ -443,12 +436,19 @@
    "fieldname": "value_conveyance_allowance",
    "fieldtype": "Float",
    "label": "Value (Conveyance Allowance)"
+  },
+  {
+   "depends_on": "eval:doc.eligible_for_corporate_allowance",
+   "fieldname": "corporate_allowance_method",
+   "fieldtype": "Select",
+   "label": "Payment Method(Corporate Allownace)",
+   "options": "Percent\nLumpsum"
   }
  ],
  "icon": "fa fa-file-text",
  "idx": 1,
  "links": [],
- "modified": "2026-11-24 12:10:06.031025",
+ "modified": "2026-11-24 12:29:42.394418",
  "modified_by": "Administrator",
  "module": "Payroll",
  "name": "Salary Structure",
