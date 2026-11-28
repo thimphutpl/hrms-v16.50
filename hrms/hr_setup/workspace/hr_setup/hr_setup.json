@@ -5,7 +5,7 @@
    "label": "Department Wise Employee Count"
   }
  ],
- "content": "[{\"id\": \"1f499fc2d6\", \"type\": \"onboarding\", \"data\": {\"onboarding_name\": \"HR Onboarding\", \"col\": 12}}, {\"id\": \"6ff1e7c3de\", \"type\": \"chart\", \"data\": {\"chart_name\": \"Department Wise Employee Count\", \"col\": 12}}, {\"id\": \"a81b2c6bd8\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Total Employees\", \"col\": 4}}, {\"id\": \"9ba6aa02f7\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Employees Joining (This Quarter)\", \"col\": 4}}, {\"id\": \"e1432ee93d\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Employees Relieving (This Quarter)\", \"col\": 4}}, {\"id\": \"FE3ljr8aTn\", \"type\": \"paragraph\", \"data\": {\"text\": \"\\u003cb\\u003eMaster Settings\\u003c/b\\u003e\", \"col\": 12}}, {\"id\": \"IxJ9nl_Efs\", \"type\": \"card\", \"data\": {\"card_name\": \"Setup\", \"col\": 4}}, {\"id\": \"fhPs6XBVPx\", \"type\": \"card\", \"data\": {\"card_name\": \"Employee Record\", \"col\": 4}}, {\"id\": \"OKUYpvCw8a\", \"type\": \"card\", \"data\": {\"card_name\": \"Attendance\", \"col\": 4}}, {\"id\": \"RVZ6SGLm40\", \"type\": \"card\", \"data\": {\"card_name\": \"Increment and Promotion\", \"col\": 4}}, {\"id\": \"So4c6aV8B1\", \"type\": \"card\", \"data\": {\"card_name\": \"Others Transaction\", \"col\": 4}}]",
+ "content": "[{\"id\": \"1f499fc2d6\", \"type\": \"onboarding\", \"data\": {\"onboarding_name\": \"HR Onboarding\", \"col\": 12}}, {\"id\": \"6ff1e7c3de\", \"type\": \"chart\", \"data\": {\"chart_name\": \"Department Wise Employee Count\", \"col\": 12}}, {\"id\": \"a81b2c6bd8\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Total Employees\", \"col\": 4}}, {\"id\": \"9ba6aa02f7\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Employees Joining (This Quarter)\", \"col\": 4}}, {\"id\": \"e1432ee93d\", \"type\": \"number_card\", \"data\": {\"number_card_name\": \"Employees Relieving (This Quarter)\", \"col\": 4}}, {\"id\": \"FE3ljr8aTn\", \"type\": \"paragraph\", \"data\": {\"text\": \"\\u003cb\\u003eMaster Settings\\u003c/b\\u003e\", \"col\": 12}}, {\"id\": \"IxJ9nl_Efs\", \"type\": \"card\", \"data\": {\"card_name\": \"Setup\", \"col\": 4}}, {\"id\": \"fhPs6XBVPx\", \"type\": \"card\", \"data\": {\"card_name\": \"Employee Record\", \"col\": 4}}, {\"id\": \"RVZ6SGLm40\", \"type\": \"card\", \"data\": {\"card_name\": \"Increment and Promotion\", \"col\": 4}}, {\"id\": \"So4c6aV8B1\", \"type\": \"card\", \"data\": {\"card_name\": \"Others Transaction\", \"col\": 4}}]",
  "creation": "2020-03-02 15:48:58.322521",
  "custom_blocks": [],
  "docstatus": 0,
@@ -138,45 +138,6 @@
   {
    "hidden": 0,
    "is_query_report": 0,
-   "label": "Attendance",
-   "link_count": 3,
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Card Break"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Attendance",
-   "link_count": 0,
-   "link_to": "Attendance",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Attendance Request",
-   "link_count": 0,
-   "link_to": "Attendance Request",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Employee Attendance Tool",
-   "link_count": 0,
-   "link_to": "Employee Attendance Tool",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
    "label": "Increment and Promotion",
    "link_count": 4,
    "link_type": "DocType",
@@ -283,7 +244,7 @@
    "type": "Link"
   }
  ],
- "modified": "2026-11-19 16:41:06.534334",
+ "modified": "2026-11-27 15:11:31.986482",
  "modified_by": "Administrator",
  "module": "HR Setup",
  "module_onboarding": "HR Onboarding",
